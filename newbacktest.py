@@ -8,15 +8,16 @@ from easyquant.quotation import use_quotation
 
 print('backtest 回测 测试 ')
 
-quotation = use_quotation('jqdata')
+# quotation = use_quotation('jqdata')
+quotation = use_quotation('')
 
 
 trade_days = quotation.get_all_trade_days()
 
 #
-end_date = "2021-12-24"
+end_date = "2024-02-23"
 
-stock_code="002230"
+stock_code="000503"
 size = 500
 
 bars = quotation.get_bars(stock_code, size,

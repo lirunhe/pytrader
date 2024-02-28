@@ -8,17 +8,21 @@ class MACDStrategy(BacktestStrategyTemplate):
     """MACD指标策略"""
 
     def get_singal(self, df: DataFrame):
-        macd_raw, signal, hist  = self.get_score(df)
+        try:
+            macd_raw, signal, hist = self.get_score(df)
 
-        macd = macd_raw[-1] - signal[-1]
+            macd = macd_raw[-1] - signal[-1]
 
-        if macd > 0:
-            return 1
+            if macd > 0:
+                return 1
 
-        if macd < 0:
-            return 0
+            if macd < 0:
+                return 0
 
-        return -1
+            return -1
+        except:
+            return -1
+
 
     def get_score(self, df: DataFrame):
         return MACD(df.close, fastperiod=12, slowperiod=26, signalperiod=9)

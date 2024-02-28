@@ -8,19 +8,22 @@ class BOLLStrategy(BacktestStrategyTemplate):
     """BOLL指标策略"""
 
     def get_singal(self, df: DataFrame):
-        upper, middle, lower = self.get_boll(df)
-         # 获取最新价格
-        current_price = df.close[-1]
+        try:
+            upper, middle, lower = self.get_boll(df)
+             # 获取最新价格
+            current_price = df.close[-1]
 
-        # 穿越上轨，买入信号
-        if current_price > upper[-1]:
-            return 1
+            # 穿越上轨，买入信号
+            if current_price > upper[-1]:
+                return 1
 
-        # 穿越下轨，卖出信号
-        if current_price < lower[-1]:
-            return  0
+            # 穿越下轨，卖出信号
+            if current_price < lower[-1]:
+                return  0
+            return -1
+        except:
+            return -1
 
-        return -1
 
     def get_boll(self, df: DataFrame):
         return BBANDS(df.close, timeperiod=14, nbdevup=2, nbdevdn=2, matype=0)

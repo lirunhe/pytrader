@@ -25,8 +25,8 @@ def get_t_price(code: str):
 def get_t_prices(codes: List[str]):
     return [get_t_price(code) for code in codes]
 
-
-quotation = use_quotation('tushare')
+# quotation = use_quotation('tushare')
+quotation = use_quotation('')
 codes = {
     # "512580": "碳中和",
     # "002233": "塔牌",

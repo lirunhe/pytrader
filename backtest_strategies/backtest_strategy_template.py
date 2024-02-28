@@ -2,6 +2,9 @@
 
 import matplotlib.pyplot as plt
 from pandas import DataFrame
+import matplotlib
+matplotlib.use('TkAgg')
+# matplotlib 的 backend的默认渲染器是agg，agg是一个没有图形显示界面的终端，如果要图像正常显示，则需要切换为图形界面显示的终端TkAgg
 
 
 # 策略 尾盘根据K线数据买卖

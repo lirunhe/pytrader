@@ -229,7 +229,7 @@ class FreeOnlineQuotation(Quotation):
     def get_bars(self, security, count, unit='1d',
                  fields=['date', 'open', 'high', 'low', 'close', 'volume'],
                  include_now=False, end_dt=None) -> DataFrame:
-        df = get_price(self._format_code(security), end_date=end_dt, count=security, frequency=unit)
+        df = get_price(self._format_code(security), end_date=end_dt, count=count, frequency=unit)
         return df
 
 
@@ -247,7 +247,8 @@ def use_quotation(source: str) -> Quotation:
 
 
 if __name__ == '__main__':
-    qutation = use_quotation('jqdata')
+    # qutation = use_quotation('jqdata')
+    qutation = use_quotation('')
     # df1 = qutation.get_bars("002230", 200, unit="5m", end_dt=datetime.datetime.now())
     # df2 = qutation.get_bars("002230", 200, unit="5m", end_dt=datetime.datetime.now())
     # print(df1)

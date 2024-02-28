@@ -14,13 +14,14 @@ strategy_class = load_strategy_class(strategy.code, 'custom_strategy_%d' % strat
 
 #
 mock_start_dt = "2020-01-01"
-mock_end_dt= "2021-11-11"
+mock_end_dt= "2020-01-02"
 
 backtest_engine = BackTestEngine(strategy_class=strategy_class,
                                  start_date=mock_start_dt,
                                  end_date=mock_end_dt,
-                                 bar_type='1d',
-                                 quotation='jqdata')
+                                 bar_type='1m',
+                                 # quotation='jqdata')
+                                 quotation='')
 
 backtest_engine.start()
 

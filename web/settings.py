@@ -1,7 +1,8 @@
-from pydantic import BaseSettings
+# from pydantic import BaseSettings
+from pydantic import BaseConfig
 
 
-class APISettings(BaseSettings):
+class APISettings(BaseConfig):
     max_wait_time_count: int = 10
 
     class Config:

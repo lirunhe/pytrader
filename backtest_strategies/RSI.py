@@ -13,14 +13,17 @@ class RSIStrategy(BacktestStrategyTemplate):
     upper_rsi = 65
 
     def get_singal(self, df: DataFrame):
-        rsi = self.get_scores(df)[-1]
-        if rsi < self.lower_rsi:
-            return 1
+        try:
+            rsi = self.get_scores(df)[-1]
+            if rsi < self.lower_rsi:
+                return 1
 
-        if rsi > self.upper_rsi:
-            return 0
+            if rsi > self.upper_rsi:
+                return 0
 
-        return -1
+            return -1
+        except:
+            return -1
 
     def get_scores(self, df: DataFrame):
         return RSI(df.close, 21)
