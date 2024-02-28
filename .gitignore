@@ -75,3 +75,4 @@ dist
 *.db
 tushare.json
 pytrader.db
+/venv
