@@ -6,7 +6,8 @@ from functools import lru_cache
 import requests
 
 
-f = open("../../trade_days.json", mode='r', encoding='utf-8')days = list(json.loads(f.read()).values())
+f = open("trade_days.json", mode='r', encoding='utf-8')
+days = list(json.loads(f.read()).values())
 f.close()
 
 def get_all_trade_days():
