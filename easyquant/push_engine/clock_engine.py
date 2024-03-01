@@ -55,7 +55,9 @@ class DailyHandler:
     def __init__(self, func, time: str):
         """
         :param clock_type:
-        :param time: 具体执行时间,一个字符串格式的时间,有两种方式：(1) 24小时内的任意时间，例如"10:00", "01:00"；在tick频率的策略中，可以精确到秒(2)time="every_bar",只能在 run_daily 中调用,运行时间和您设置的频率一致，按天会在交易日的开盘时调用一次，按分钟会在交易时间每分钟运行。
+        :param time: 具体执行时间,一个字符串格式的时间,有两种方式：
+                        (1) 24小时内的任意时间，例如"10:00", "01:00"；在tick频率的策略中，可以精确到秒
+                        (2)time="every_bar",只能在 run_daily 中调用,运行时间和您设置的频率一致，按天会在交易日的开盘时调用一次，按分钟会在交易时间每分钟运行。
         :param is_trading_date: bool(是否只有在交易日触发)
         :param makeup: 注册时,如果已经过了触发时机,是否立即触发
         :return:

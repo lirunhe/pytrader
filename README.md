@@ -7,6 +7,8 @@
 ## 安装
 
     pip3 install -r requirements.txt
+- 输出 requirements.txt
+   pip freeze > requirements.txt
 
 - 手动安装`talib`依赖, [talib](https://www.lfd.uci.edu/~gohlke/pythonlibs/#ta-lib)
 
