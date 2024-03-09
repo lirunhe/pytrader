@@ -5,13 +5,14 @@ from functools import lru_cache
 
 import requests
 
-
 f = open("trade_days.json", mode='r', encoding='utf-8')
 days = list(json.loads(f.read()).values())
 f.close()
 
+
 def get_all_trade_days():
     return days
+
 
 def _is_trade_day(now_time):
     today = now_time.strftime('%Y%m%d')
@@ -25,7 +26,15 @@ def is_weekend(now_time):
 def is_trade_date(now_time):
     return _is_trade_day(now_time)
 
-def get_next_trade_date(now_time):
+
+def is_leap_year(year):
+    if year % 4 == 0 and year % 100 != 0 or year % 400 == 0:
+        return True
+    else:
+        return False
+
+
+def get_next_trade_date(now_time: datetime.datetime):
     """
     :param now_time: datetime.datetime
     :return:
@@ -35,6 +44,10 @@ def get_next_trade_date(now_time):
     """
     now = now_time
     max_days = 365
+    year = now.year
+    if is_leap_year(year):
+        max_days = 366
+        print(max_days)
     days = 0
     while 1:
         days += 1
@@ -107,6 +120,7 @@ def is_closing(now_time, start=datetime.time(14, 54, 30)):
         if start <= now < close:
             return True
     return False
+
 
 if __name__ == "__main__":
     doctest.testmod()
