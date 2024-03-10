@@ -65,7 +65,7 @@ class Quotation(metaclass=abc.ABCMeta):
         security = SecurityInfo()
         security.code = security
         security.name = security
-        return SecurityInfo
+        return security
 
 
 def is_shanghai(stock_code):

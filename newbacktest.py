@@ -15,9 +15,9 @@ quotation = use_quotation('')
 trade_days = quotation.get_all_trade_days()
 
 #
-end_date = "2024-02-27"
+end_date = "2024-03-08"
 
-stock_code="002736"
+stock_code="000625"
 size = 500
 
 bars = quotation.get_bars(stock_code, size,

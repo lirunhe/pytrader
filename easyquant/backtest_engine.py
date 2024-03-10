@@ -122,6 +122,7 @@ class BackTestEngine:
             while current_time <= end_date:
                 self.context.change_dt(current_time)
                 # 更新
+                # TODO 针对回测爬取数据这一步，可以考虑一次爬取全部数据，再按照时序逐步给出来，确保数据只需要爬取一次
                 strategy.on_bar(self.context, self.quotation_engine.fetch_quotation(end_date=current_time))
                 current_time += timedelta(minutes=minute)
         else:
@@ -137,4 +138,5 @@ class BackTestEngine:
         关闭进程前的处理
         :return:
         """
-        self.log.debug("开始关闭进程...")
+        self.log.info("开始关闭进程...")
+        # self.log.debug("开始关闭进程...")

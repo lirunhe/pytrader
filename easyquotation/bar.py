@@ -19,12 +19,16 @@ def get_price_day_tx(code, end_date='', count=10, frequency='1d'):  # 日线获�
     return df
 
 
-# 腾讯分钟线
+# 腾讯分钟线,理论上应该设置传入结束日期为datetime类型而非date
 def get_price_min_tx(code, end_date=None, count=10, frequency='1d'):  # 分钟线获取
     ts = int(frequency[:-1]) if frequency[:-1].isdigit() else 1  # 解析K线周期数
     if end_date: 
         end_date = end_date.strftime('%Y-%m-%d') if isinstance(end_date, datetime.date) else end_date.split(' ')[0]
-    URL = f'http://ifzq.gtimg.cn/appstock/app/kline/mkline?param={code},m{ts},,{count}'
+        formatted_string = end_date.strftime("%Y%m%d%H%M") if isinstance(end_date, datetime.date) else datetime.datetime.strptime(end_date.split(' ')[0], "%Y-%m-%d").strftime("%Y%m%d%H%M")
+        #TODO 这里有一个问题，就是只能获取到当前时间的数据而非历史数据，故分钟级别的数据回溯得另外寻求出路，只能拿到近15天的数据
+        URL = f'http://ifzq.gtimg.cn/appstock/app/kline/mkline?param={code},m{ts},{formatted_string},{count}'
+    else:
+        URL = f'http://ifzq.gtimg.cn/appstock/app/kline/mkline?param={code},m{ts},,{count}'
     st = json.loads(requests.get(URL).content)
     buf = st['data'][code]['m' + str(ts)]
     df = pd.DataFrame(buf, columns=['time', 'open', 'close', 'high', 'low', 'volume', 'n1', 'n2'])
