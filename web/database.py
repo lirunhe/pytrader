@@ -5,7 +5,8 @@ from sqlalchemy.orm import sessionmaker
 
 class Database:
     def __init__(self):
-        SQLALCHEMY_DATABASE_URL = f'sqlite:///pytrader.db'
+        # SQLALCHEMY_DATABASE_URL = f'sqlite:///pytrader.db'
+        SQLALCHEMY_DATABASE_URL = f'postgresql://superset:superset@autotrade:5432/tradetest'
         self.engine = create_engine(
             SQLALCHEMY_DATABASE_URL, pool_pre_ping=True
         )
@@ -28,4 +29,3 @@ class Database:
             conn.close()
 
 
-Base = declarative_base()

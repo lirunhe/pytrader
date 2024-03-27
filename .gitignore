@@ -76,3 +76,5 @@ dist
 tushare.json
 pytrader.db
 /venv
+db_config.py
+redis.conf

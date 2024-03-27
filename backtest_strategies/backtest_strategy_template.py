@@ -29,7 +29,7 @@ class BacktestStrategyTemplate:
     def show_plt(self):
         df = self.output_earning_rate()
         fig, axes = plt.subplots(2, 1, sharex=True, figsize=(18, 12))
-        df[['strategy', 'base', 'signals']].plot(ax=axes[0], grid=True, title='收益', figsize=(20, 10))
+        df[['strategy', 'base', 'signals']].plot(ax=axes[0], grid=True, title='strategy', figsize=(20, 10))
         self.show_score(df, axes[1])
         plt.show()
 

@@ -6,6 +6,12 @@ from backtest_strategies.backtest_strategy_template import BacktestStrategyTempl
 
 class BOLLStrategy(BacktestStrategyTemplate):
     """BOLL指标策略"""
+    def __init__(self, stock_code, bars: DataFrame,days=250,timeperiod=14, nbdevup=2, nbdevdn=2, matype=0):
+        super().__init__(stock_code, bars,days)
+        self.timeperiod=timeperiod
+        self.nbdevup=nbdevup
+        self.nbdevdn=nbdevdn
+        self.matype=matype
 
     def get_singal(self, df: DataFrame):
         try:
@@ -26,7 +32,7 @@ class BOLLStrategy(BacktestStrategyTemplate):
 
 
     def get_boll(self, df: DataFrame):
-        return BBANDS(df.close, timeperiod=14, nbdevup=2, nbdevdn=2, matype=0)
+        return BBANDS(df.close, timeperiod=self.timeperiod, nbdevup=self.nbdevup, nbdevdn=self.nbdevdn, matype=self.matype)
 
     def show_score(self, df, ax):
         upper, middle, lower = self.get_boll(df)

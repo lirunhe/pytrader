@@ -12,7 +12,9 @@ import tushare as ts
 
 import requests
 from jqdatasdk import finance, query
+from sqlalchemy import desc, asc
 
+from dbconnect import DataFetcher, OdsStockKlineDay
 from easyquant.easydealutils.time import get_all_trade_days
 from easyquant.models import SecurityInfo
 from easytrader.utils.misc import file2dict
@@ -78,7 +80,7 @@ def is_shanghai(stock_code):
     :return 'sh' or 'sz'"""
     assert type(stock_code) is str, "stock code need str type"
     sh_head = ("50", "51", "60", "90", "110", "113",
-               "132", "204", "5", "6", "9", "7")
+               "132", "204", "5", "6", "9", "7", 'sh')
     return stock_code.startswith(sh_head)
 
 
@@ -224,12 +226,68 @@ class FreeOnlineQuotation(Quotation):
         return "sh" if is_shanghai(stock_code) else "sz"
 
     def _format_code(self, code: str) -> str:
+        if 'sh' in code or 'sz' in code:
+            return code
         return "%s%s" % (self.get_stock_type(code), code)
 
     def get_bars(self, security, count, unit='1d',
                  fields=['date', 'open', 'high', 'low', 'close', 'volume'],
                  include_now=False, end_dt=None) -> DataFrame:
         df = get_price(self._format_code(security), end_date=end_dt, count=count, frequency=unit)
+        return df
+
+
+class LocalDataQuotation(Quotation):
+    """
+    本地数据
+    """
+
+    def __init__(self):
+        column_rename_map = {
+            "open": 'open',
+            "closed": 'close',
+            "high": 'high',
+            "low": 'low',
+            "trade_count": 'volume',
+            "dt": "date"
+        }
+        self.data_fetcher = DataFetcher(column_rename_map=column_rename_map, index_cloumn='dt')
+
+    def get_dbconnect(self, stock_code, start_date='2015-01-01', end_date=datetime.datetime.today().strftime('%Y-%m-%d'),count=200 ):
+        # 创建数据获取器实例
+
+        # 构建SQLAlchemy查询（例如：获取特定股票代码的日K线数据）
+
+        if datetime.datetime.strptime(end_date,'%Y-%m-%d')>=datetime.datetime.today():
+            end_date=datetime.datetime.today()
+        else:
+            end_date=datetime.datetime.strptime(end_date, '%Y-%m-%d')
+
+        start_date=datetime.datetime.strptime(start_date, '%Y-%m-%d')
+
+        query = self.data_fetcher.session.query(OdsStockKlineDay.stock_code,
+                                                OdsStockKlineDay.open,
+                                                OdsStockKlineDay.closed,
+                                                OdsStockKlineDay.high,
+                                                OdsStockKlineDay.low,
+                                                OdsStockKlineDay.trade_count,
+                                                OdsStockKlineDay.dt).filter(
+            OdsStockKlineDay.stock_code == stock_code,
+            OdsStockKlineDay.dt >= start_date,
+            OdsStockKlineDay.dt <= end_date
+        ).order_by(desc(OdsStockKlineDay.dt)).statement.limit(count)
+
+        # 执行查询并获取DataFrame
+        df = self.data_fetcher.fetch_data_as_df(query)
+
+        return df
+
+    def get_bars(self, stock_code, count, unit='1d',
+                 fields=['date', 'open', 'high', 'low', 'close', 'volume'],
+                 include_now=False, end_dt=None) -> DataFrame:
+        df =self.get_dbconnect(stock_code, start_date='2015-01-01', end_date=end_dt,count=count)
+        # df = get_price(self._format_code(stock_code), end_date=end_dt, count=count, frequency=unit)
+
         return df
 
 
@@ -243,14 +301,18 @@ def use_quotation(source: str) -> Quotation:
         return JQDataQuotation()
     if source in ["tushare"]:
         return TushareQuotation()
+    if source in ['local']:
+        return LocalDataQuotation()
     return FreeOnlineQuotation()
 
 
 if __name__ == '__main__':
     # qutation = use_quotation('jqdata')
-    qutation = use_quotation('')
+    qutation = use_quotation('local')
+    # qutation = use_quotation('')
     # df1 = qutation.get_bars("002230", 200, unit="5m", end_dt=datetime.datetime.now())
     # df2 = qutation.get_bars("002230", 200, unit="5m", end_dt=datetime.datetime.now())
     # print(df1)
     # print(df2)
-    print(qutation.get_price("002230", datetime.datetime.now()))
+    # print(qutation.get_price("002230", datetime.datetime.now()))
+    qutation.get_dbconnect('000001', start_date='2015-01-01', end_date=datetime.datetime.today().strftime('%Y-%m-%d'))
