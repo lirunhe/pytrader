@@ -48,7 +48,7 @@ class RSIStrategy(BacktestStrategyTemplate):
             rsi_long = self.get_scores_for_other_date_diff(self.rsi_date_diff_long,df)[-1]
             rsi_short = self.get_scores_for_other_date_diff(self.rsi_date_diff_short,df)[-1]
             # 判断是否处于多头市场
-            if rsi_long>=rsi_short:
+            if rsi_long<=rsi_short:
                 if_uper_singal=1
             else:
                 if_uper_singal=0
