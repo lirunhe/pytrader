@@ -1,14 +1,24 @@
-import { defineStore } from 'pinia'
-import { login, loginParam, getRouterList, getUser } from '/@/api/layout/index'
-import { ILayout, IMenubarStatus, ITagsList, IMenubarList, ISetting, IMenubar, IStatus, ITags, IUserInfo } from '/@/type/store/layout'
+import {defineStore} from 'pinia'
+import {login, loginParam, getRouterList, getUser} from '/@/api/layout/index'
+import {
+    ILayout,
+    IMenubarStatus,
+    ITagsList,
+    IMenubarList,
+    ISetting,
+    IMenubar,
+    IStatus,
+    ITags,
+    IUserInfo
+} from '/@/type/store/layout'
 import router from '/@/router/index'
-import { allowRouter } from '/@/router/index'
-import { generatorDynamicRouter } from '/@/router/asyncRouter'
-import { setLocal, getLocal, decode } from '/@/utils/tools'
-import { RouteLocationNormalizedLoaded } from 'vue-router'
+import {allowRouter} from '/@/router/index'
+import {generatorDynamicRouter} from '/@/router/asyncRouter'
+import {setLocal, getLocal, decode} from '/@/utils/tools'
+import {RouteLocationNormalizedLoaded} from 'vue-router'
 
 const setting = getLocal<ISetting>('setting')
-const { ACCESS_TOKEN } = getLocal<IStatus>('token')
+const {ACCESS_TOKEN} = getLocal<IStatus>('token')
 
 export const useLayoutStore = defineStore({
     id: 'layout',
@@ -99,11 +109,11 @@ export const useLayoutStore = defineStore({
                 this.tags.tagsList.splice(index, 1)
                 const i = index === this.tags.tagsList.length ? index - 1 : index
                 this.tags.tagsList[i].isActive = true
-                this.removeCachedViews({ name: obj.tagsList.name, index })
-                router.push({ path: this.tags.tagsList[i].path })
+                this.removeCachedViews({name: obj.tagsList.name, index})
+                router.push({path: this.tags.tagsList[i].path})
             } else {
                 this.tags.tagsList.splice(index, 1)
-                this.removeCachedViews({ name: obj.tagsList.name, index })
+                this.removeCachedViews({name: obj.tagsList.name, index})
             }
         },
         removeOtherTagNav(tagsList: ITagsList): void {
@@ -112,12 +122,12 @@ export const useLayoutStore = defineStore({
             this.tags.tagsList.splice(0, index)
             this.tags.cachedViews.splice(index + 1)
             this.tags.cachedViews.splice(0, index)
-            router.push({ path: tagsList.path })
+            router.push({path: tagsList.path})
         },
         removeAllTagNav(): void {
             this.tags.tagsList.splice(0)
             this.tags.cachedViews.splice(0)
-            router.push({ path: '/redirect/' })
+            router.push({path: '/redirect/'})
         },
         // 添加缓存页面
         addCachedViews(obj: { name: string, noCache: boolean }): void {
@@ -192,7 +202,7 @@ export const useLayoutStore = defineStore({
             const token = res.data.access_token
             this.status.ACCESS_TOKEN = token
             setLocal('token', this.status, 1000 * 60 * 60)
-            const { query } = router.currentRoute.value
+            const {query} = router.currentRoute.value
             router.push(typeof query.from === 'string' ? decode(query.from) : '/')
         },
         async getUser(): Promise<void> {

@@ -37,7 +37,7 @@ class BaseQuotation(metaclass=abc.ABCMeta):
         stock_list = []
         for i in range(0, len(stock_codes), self.max_num):
             request_list = ",".join(
-                stock_with_exchange_list[i : i + self.max_num]
+                stock_with_exchange_list[i: i + self.max_num]
             )
             stock_list.append(request_list)
         return stock_list

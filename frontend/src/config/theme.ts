@@ -1,8 +1,8 @@
-import { ITheme } from '/@/type/config/theme'
-import { useLayoutStore } from '/@/store/modules/layout'
+import {ITheme} from '/@/type/config/theme'
+import {useLayoutStore} from '/@/store/modules/layout'
 
-const theme:() => ITheme[] = () => {
-    const { color } = useLayoutStore().getSetting
+const theme: () => ITheme[] = () => {
+    const {color} = useLayoutStore().getSetting
     return [
         {
             tagsActiveColor: '#fff',

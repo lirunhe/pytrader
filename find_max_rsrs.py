@@ -78,13 +78,14 @@ def get_max_args(stock_code, days, slop_days=18, M=400, MA=10, buy_score=0.7, sa
     df["基准"] = df['close'] / df['close'][0]
 
     print("slop_days=%s, M=%s, MA=%s,buy_score = %s, sail_score = %s use_ma:%s 基准收益率: %s 收益率: %s" % (slop_days, M,
-                                                                                           MA,
-                                                                                           buy_score,
-                                                                                           sail_score,
-                                                                                            use_ma,
-                                                                                           df["基准"].values[-1],
-                                                                                           df["策略"].values[
-                                                                                               -1]))
+                                                                                                     MA,
+                                                                                                     buy_score,
+                                                                                                     sail_score,
+                                                                                                     use_ma,
+                                                                                                     df["基准"].values[
+                                                                                                         -1],
+                                                                                                     df["策略"].values[
+                                                                                                         -1]))
 
     if df["策略"].values[-1] > df["基准"].values[-1]:
         fig, axes = plt.subplots(2, 1, sharex=True, figsize=(18, 12))
@@ -115,13 +116,11 @@ slope_series = [ols_data[i][1] for i in range(M + days)]
 r2 = [ols_data[i][2] for i in range(M + days)]
 
 # 斜率直方图
-plt.figure(figsize=(15,5))
-plt.hist(slope_series, bins= 100, range= None, weights= None, cumulative= False,
-         bottom= None, histtype= 'bar', align= 'mid', orientation= 'vertical', rwidth= None, log= False, color= 'r',
-         label='直方图', stacked= False)
+plt.figure(figsize=(15, 5))
+plt.hist(slope_series, bins=100, range=None, weights=None, cumulative=False,
+         bottom=None, histtype='bar', align='mid', orientation='vertical', rwidth=None, log=False, color='r',
+         label='直方图', stacked=False)
 plt.show()
-
-
 
 # slop_days=17, M=200, MA=0,buy_score = 0.9, sail_score = -1.3 use_ma:0 收益率: 2.2461242244347384
 # slop_days=10, M=200, MA=10,buy_score = 1.0, sail_score = -1.2 基准收益率: 1.6168427594779367 收益率: 2.257659818289085

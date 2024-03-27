@@ -1,24 +1,26 @@
-import { UserConfigExport, ConfigEnv, loadEnv } from 'vite'
+import {UserConfigExport, ConfigEnv, loadEnv} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import { viteMockServe } from 'vite-plugin-mock'
+import {viteMockServe} from 'vite-plugin-mock'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 
-const setAlias = (alias: [string, string][]) => alias.map(v => {return { find: v[0], replacement: path.resolve(__dirname, v[1]) }})
+const setAlias = (alias: [string, string][]) => alias.map(v => {
+    return {find: v[0], replacement: path.resolve(__dirname, v[1])}
+})
 const proxy = (list: [string, string][]) => {
-    const obj:IObject<any> = {}
+    const obj: IObject<any> = {}
     list.forEach((v) => {
         obj[v[0]] = {
             target: v[1],
             changeOrigin: true,
-            rewrite: (path:any) => path.replace(new RegExp(`^${v[0]}`), ''),
-            ...(/^https:\/\//.test(v[1]) ? { secure: false } : {})
+            rewrite: (path: any) => path.replace(new RegExp(`^${v[0]}`), ''),
+            ...(/^https:\/\//.test(v[1]) ? {secure: false} : {})
         }
     })
     return obj
 }
 
-export default ({ command, mode }: ConfigEnv): UserConfigExport => {
+export default ({command, mode}: ConfigEnv): UserConfigExport => {
     const root = process.cwd()
     const env = loadEnv(mode, root) as unknown as ImportMetaEnv
     const prodMock = false

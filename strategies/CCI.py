@@ -103,7 +103,6 @@ class Strategy(StrategyTemplate):
                 self.log.info('%s 盈亏: %s ' % (stock_code,
                                               amount * (latest.close[0] - stock_pos.cost_price)))
 
-
     def get_stock_pos(self, positions, stock_code):
         stock_pos = list(filter(lambda pos: pos.stock_code == stock_code, positions))
         if len(stock_pos) == 0:

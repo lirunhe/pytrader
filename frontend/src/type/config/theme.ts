@@ -1,4 +1,3 @@
-
 export interface ITheme {
     // logo不传则使用侧边栏sidebar样式
     logoColor?: string

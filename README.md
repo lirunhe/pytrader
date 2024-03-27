@@ -1,14 +1,15 @@
 # pytrader
 
-基于 [easytrader](https://github.com/shidenggui/easytrader) 和 [easyquotation](https://github.com/shidenggui/easyquotation) 的量化交易框架
+基于 [easytrader](https://github.com/shidenggui/easytrader) 和 [easyquotation](https://github.com/shidenggui/easyquotation)
+的量化交易框架
 
 支持东方财富自动交易
 
 ## 安装
 
     pip3 install -r requirements.txt
-- 输出 requirements.txt
-   pip freeze > requirements.txt
+
+- 输出 requirements.txt pip freeze > requirements.txt
 
 - 手动安装`talib`依赖, [talib](https://www.lfd.uci.edu/~gohlke/pythonlibs/#ta-lib)
 
@@ -25,7 +26,7 @@
 策略需要继承StrategyTemplate类，实现int和onbar等函数。
 
 init 设置关注的股票，行情引擎就会推动股票行情。
- 
+
 ```python
 
     def init(self):
@@ -47,7 +48,6 @@ def on_bar(self, context: Context, data: Dict[str, DataFrame]):
 
 - Context 是一个工具类，可以获取其他bar或者计算cci、rsi等指标
 - data是推动的行情字典，可以用股票代码获取DataFrame类型的行情数据
-
 
 ## 在线交易
 

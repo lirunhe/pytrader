@@ -4,6 +4,7 @@ export enum IMenubarStatus {
     PHE, // 手机展开
     PHN // 手机合并
 }
+
 export interface ISetting {
     theme: number
     showTags: boolean
@@ -13,23 +14,28 @@ export interface ISetting {
     usePinyinSearch: boolean
     mode: 'horizontal' | 'vertical' // 导航模式
 }
+
 export interface IMenubar {
     status: IMenubarStatus
     menuList: Array<IMenubarList>
     isPhone: boolean
 }
+
 export interface IUserInfo {
     name: string,
     role: string[]
 }
+
 export interface ITags {
     tagsList: Array<ITagsList>
     cachedViews: string[]
 }
+
 export interface IStatus {
     isLoading: boolean
     ACCESS_TOKEN: string
 }
+
 export interface ILayout {
     // 左侧导航栏
     menubar: IMenubar
@@ -38,14 +44,15 @@ export interface ILayout {
     // 标签栏
     tags: ITags
     setting: ISetting
-    status:IStatus
+    status: IStatus
 }
+
 export interface IMenubarList {
     parentId?: number | string
     id?: number | string
     name: string
     path: string
-    redirect?: string | {name: string}
+    redirect?: string | { name: string }
     meta: {
         icon: string
         title: string

@@ -18,11 +18,11 @@ def get_stock_type(stock_code):
     if stock_code.startswith(("sh", "sz")):
         return stock_code[:2]
     if stock_code.startswith(
-        ("50", "51", "60", "73", "90", "110", "113", "132", "204", "78")
+            ("50", "51", "60", "73", "90", "110", "113", "132", "204", "78")
     ):
         return "sh"
     if stock_code.startswith(
-        ("00", "13", "18", "15", "16", "18", "20", "30", "39", "115", "1318")
+            ("00", "13", "18", "15", "16", "18", "20", "30", "39", "115", "1318")
     ):
         return "sz"
     if stock_code.startswith(("5", "6", "9")):
@@ -64,10 +64,10 @@ def get_today_ipo_data():
     timestamp = random.randint(1000000000000, 9999999999999)
     home_page_url = "https://xueqiu.com"
     ipo_data_url = (
-        "https://xueqiu.com/proipo/query.json?column=symbol,name,onl_subcode,onl_subbegdate,actissqty,onl"
-        "_actissqty,onl_submaxqty,iss_price,onl_lotwiner_stpub_date,onl_lotwinrt,onl_lotwin_amount,stock_"
-        "income&orderBy=onl_subbegdate&order=desc&stockType=&page=1&size=30&_=%s"
-        % (str(timestamp))
+            "https://xueqiu.com/proipo/query.json?column=symbol,name,onl_subcode,onl_subbegdate,actissqty,onl"
+            "_actissqty,onl_submaxqty,iss_price,onl_lotwiner_stpub_date,onl_lotwinrt,onl_lotwin_amount,stock_"
+            "income&orderBy=onl_subbegdate&order=desc&stockType=&page=1&size=30&_=%s"
+            % (str(timestamp))
     )
 
     session = requests.session()

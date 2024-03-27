@@ -59,7 +59,7 @@ class ETFQuant:
         std = np.std(slope_series)
         return (slope_series[-1] - mean) / std
 
-    def get_rsrs_score(self, stock_code, days=60, slop_days=18, M=400, MA=10,buy_sail = 0.7, sail_score = -1.4):
+    def get_rsrs_score(self, stock_code, days=60, slop_days=18, M=400, MA=10, buy_sail=0.7, sail_score=-1.4):
         self.M = M
         # m + n + days
         data = quotation.get_bars(stock_code, self.M + slop_days + days,
@@ -74,7 +74,7 @@ class ETFQuant:
         signal = []
         position = 1  # 是否持仓，持仓：1，不持仓：0
         last_rsrs_score = 0
-        last_ma = data.ma[self.M -1]
+        last_ma = data.ma[self.M - 1]
         # > -1.2 持仓
         # 最近的N天
         for i in range(days):
@@ -130,7 +130,8 @@ RSRS = pd.DataFrame([0 for i in range(days)], index=trading_dates, columns=['0']
 stock_price = pd.DataFrame([1 for i in range(days)], index=trading_dates, columns=['1'])
 slope = pd.DataFrame([1 for i in range(days)], index=trading_dates, columns=['1'])
 
-def get_payments(stock_code, days, slop_days=18, M=400, MA=10,buy_sail = 0.7, sail_score = -1.4):
+
+def get_payments(stock_code, days, slop_days=18, M=400, MA=10, buy_sail=0.7, sail_score=-1.4):
     data = eq.get_rsrs_score(stock_code, days, slop_days, M, MA, buy_sail, sail_score)
     RSRS[stock_code + "ma18"] = data[0]
     slope[stock_code + "ma18"] = data[1]
@@ -147,17 +148,20 @@ def get_payments(stock_code, days, slop_days=18, M=400, MA=10,buy_sail = 0.7, sa
     stock_price[stock_code + "策略"] = (1 + stock_price[stock_code].pct_change(1).fillna(0) * data[2]).cumprod()
     # stock_price[stock_code] = stock_price[stock_code].pct_change(1)
     stock_price[stock_code] = stock_price[stock_code] / stock_price[stock_code][0]
-    stock_price[stock_code+"signal"] = data[2]
+    stock_price[stock_code + "signal"] = data[2]
 
     print("days=%s, slop_days=%s, M=%s, MA=%s,buy_sail = %s, sail_score = %s 基准收益率: %s 收益率: %s" % (days, slop_days, M,
-                                                                                                  MA,
-                                                                                         buy_sail,sail_score,
-                                                                                         stock_price[stock_code][-1],
-                                                                                            stock_price[stock_code + "策略"][
-        -1]))
+                                                                                                   MA,
+                                                                                                   buy_sail, sail_score,
+                                                                                                   stock_price[
+                                                                                                       stock_code][-1],
+                                                                                                   stock_price[
+                                                                                                       stock_code + "策略"][
+                                                                                                       -1]))
+
 
 # get_payments('002230', days, slop_days=10, M=200, MA=1, buy_sail = 0.8, sail_score = -0.9 )
-get_payments('002230', days, slop_days=18, M=600, MA=10,buy_sail = 0.8, sail_score = -1.4 )
+get_payments('002230', days, slop_days=18, M=600, MA=10, buy_sail=0.8, sail_score=-1.4)
 # get_max_args('002230', days, slop_days=18, M=600, MA=10,buy_sail = 0.6, sail_score = -1.4 )
 # get_max_args('002230', days, slop_days=18, M=600, MA=10,buy_sail = 0.5, sail_score = -1.4 )
 # get_max_args('002230', days, slop_days=18, M=600, MA=10,buy_sail = 0.4, sail_score = -1.4 )

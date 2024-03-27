@@ -37,37 +37,37 @@ class MixStrategy(BOLLStrategy, RSIStrategy):
 
         super().__init__(stock_code, bars, days)
         self.rsistrategy = RSIStrategy(stock_code=stock_code,
-                                                bars=bars,
-                                                days=days,
-                                                lower_rsi=lower_rsi,
-                                                upper_rsi=upper_rsi,
-                                                rsi_date_diff_long=rsi_date_diff_long,
-                                                rsi_date_diff_middle=rsi_date_diff_middle,
-                                                rsi_date_diff_short=rsi_date_diff_short)
+                                       bars=bars,
+                                       days=days,
+                                       lower_rsi=lower_rsi,
+                                       upper_rsi=upper_rsi,
+                                       rsi_date_diff_long=rsi_date_diff_long,
+                                       rsi_date_diff_middle=rsi_date_diff_middle,
+                                       rsi_date_diff_short=rsi_date_diff_short)
         self.bollstrategy = BOLLStrategy(stock_code=stock_code,
-                                                  bars=bars,
-                                                  days=days,
-                                                  timeperiod=14,
-                                                  nbdevup=2,
-                                                  nbdevdn=2,
-                                                  matype=0)
+                                         bars=bars,
+                                         days=days,
+                                         timeperiod=14,
+                                         nbdevup=2,
+                                         nbdevdn=2,
+                                         matype=0)
 
     def output_earning_rate(self):
         df = self.bars[-self.days:]
         df["signals"] = self.signals
         df["strategy"] = (1 + df.close.pct_change(1).fillna(0) * self.signals).cumprod()
         df["base"] = df['close'] / df['close'][0]
-        df['rate_diff']=df["strategy"]-df["base"]+1
+        df['rate_diff'] = df["strategy"] - df["base"] + 1
         print(df["strategy"].values[-1:])
         print(df["base"].values[-1:])
-        print(df["rate_diff"].values[-1:]-1)
+        print(df["rate_diff"].values[-1:] - 1)
         return df
 
     def show_plt(self):
         df = self.output_earning_rate()
         fig, axes = plt.subplots(3, 1, sharex=True, figsize=(18, 12))
-        df[['strategy', 'base','rate_diff']].plot(ax=axes[0], grid=True, title='strategy', figsize=(20, 10))
-        df[[ 'signals']].plot(ax=axes[1], grid=True, title='signals', figsize=(20, 10))
+        df[['strategy', 'base', 'rate_diff']].plot(ax=axes[0], grid=True, title='strategy', figsize=(20, 10))
+        df[['signals']].plot(ax=axes[1], grid=True, title='signals', figsize=(20, 10))
         self.show_score(df, axes[2])
         plt.show()
 
@@ -87,6 +87,7 @@ class MixStrategy(BOLLStrategy, RSIStrategy):
             else:
                 position = singal
                 self.signals.append(singal)
+
     # TODO 关于信号这个，目前貌似是直接给出买入卖出的信号，后面考虑将各个信号的数据均拿过来加权计算，基于加权求和值来执行操作策略
     def get_singal(self, bars: DataFrame):
         # if self.rsistrategy.get_singal(df=bars) == 1 and self.bollstrategy.get_singal(df=bars) == 1:

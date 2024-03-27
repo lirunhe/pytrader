@@ -16,12 +16,13 @@ from easytrader.log import logger
 from easytrader.model import Balance, Position, Entrust, Deal
 
 public_key = '-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHdsyxT66pDG4p73yope7jxA92\nc0AT4qIJ' \
-            '/xtbBcHkFPK77upnsfDTJiVEuQDH+MiMeb+XhCLNKZGp0yaUU6GlxZdp\n+nLW8b7Kmijr3iepaDhcbVTsYBWchaWUXauj9Lrhz58' \
-            '/6AE/NF0aMolxIGpsi+ST\n2hSHPu3GSXMdhPCkWQIDAQAB\n-----END PUBLIC KEY----- '
+             '/xtbBcHkFPK77upnsfDTJiVEuQDH+MiMeb+XhCLNKZGp0yaUU6GlxZdp\n+nLW8b7Kmijr3iepaDhcbVTsYBWchaWUXauj9Lrhz58' \
+             '/6AE/NF0aMolxIGpsi+ST\n2hSHPu3GSXMdhPCkWQIDAQAB\n-----END PUBLIC KEY----- '
 
 import base64
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pkcs1_v1_5
+
 
 def encrypt_data(pwd):
     rsakey = RSA.importKey(public_key)
@@ -29,6 +30,7 @@ def encrypt_data(pwd):
     cipher_text = base64.b64encode(cipher.encrypt(pwd.encode(encoding="utf-8")))
     value = cipher_text.decode('utf8')
     return value
+
 
 class EastMoneyTrader(webtrader.WebTrader):
     config_path = os.path.dirname(__file__) + "/config/jywg.json"

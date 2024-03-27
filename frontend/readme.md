@@ -1,4 +1,3 @@
-
 <p align="center">
   <img width="320" src="https://images.hsianglee.cn/elementPlusAdmin/title.png">
 </p>
@@ -24,10 +23,12 @@
     </a>
 </p>
 
-
 ## 简介
 
-[element-plus-admin](https://github.com/hsiangleev/element-plus-admin) 是一个后台前端解决方案，它基于 [vue-next](https://github.com/vuejs/vue-next) 和 [element-plus](https://github.com/element-plus/element-plus)实现。它使用了最新的前端技术栈vite，typescript和postcss构建，内置了 动态路由，权限验证，皮肤更换，提供了丰富的功能组件，它可以帮助你快速搭建中后台产品原型。
+[element-plus-admin](https://github.com/hsiangleev/element-plus-admin)
+是一个后台前端解决方案，它基于 [vue-next](https://github.com/vuejs/vue-next)
+和 [element-plus](https://github.com/element-plus/element-plus)实现。它使用了最新的前端技术栈vite，typescript和postcss构建，内置了
+动态路由，权限验证，皮肤更换，提供了丰富的功能组件，它可以帮助你快速搭建中后台产品原型。
 
 - [在线预览](https://element-plus-admin.hsianglee.cn/)
 
@@ -35,7 +36,9 @@
 
 ## 前序准备
 
-你需要在本地安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。本项目技术栈基于 [ES2015+](http://es6.ruanyifeng.com/)、[vue-next](https://github.com/vuejs/vue-next)、[typescript](https://github.com/microsoft/TypeScript)、[vite](https://github.com/vitejs/vite)、[postcss](https://github.com/postcss/postcss) 和 [element-plus](https://github.com/element-plus/element-plus)，所有的请求数据都使用[Mock.js](https://github.com/nuysoft/Mock)进行模拟，提前了解和学习这些知识会对使用本项目有很大的帮助。
+你需要在本地安装 [node](http://nodejs.org/)
+和 [git](https://git-scm.com/)。本项目技术栈基于 [ES2015+](http://es6.ruanyifeng.com/)、[vue-next](https://github.com/vuejs/vue-next)、[typescript](https://github.com/microsoft/TypeScript)、[vite](https://github.com/vitejs/vite)、[postcss](https://github.com/postcss/postcss)
+和 [element-plus](https://github.com/element-plus/element-plus)，所有的请求数据都使用[Mock.js](https://github.com/nuysoft/Mock)进行模拟，提前了解和学习这些知识会对使用本项目有很大的帮助。
 
 <p align="center">
     <img width="900" src="https://images.hsianglee.cn/elementPlusAdmin/element-plus-admin.png">

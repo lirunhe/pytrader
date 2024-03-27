@@ -148,12 +148,12 @@ class Jsl:
         return float(per.strip("%")) / 100.
 
     def funda(
-        self,
-        fields=None,
-        min_volume=0,
-        min_discount=0,
-        ignore_nodown=False,
-        forever=False,
+            self,
+            fields=None,
+            min_volume=0,
+            min_discount=0,
+            ignore_nodown=False,
+            forever=False,
     ):
         """以字典形式返回分级A数据
         :param fields:利率范围，形如['+3.0%', '6.0%']
@@ -268,12 +268,12 @@ class Jsl:
         return self.__fundb
 
     def fundarb(
-        self,
-        jsl_username,
-        jsl_password,
-        avolume=100,
-        bvolume=100,
-        ptype="price",
+            self,
+            jsl_username,
+            jsl_password,
+            avolume=100,
+            bvolume=100,
+            ptype="price",
     ):
         """以字典形式返回分级A数据
         :param jsl_username: 集思录用户名
@@ -325,7 +325,7 @@ class Jsl:
         return self.__fundarb
 
     def etfindex(
-        self, index_id="", min_volume=0, max_discount=None, min_discount=None
+            self, index_id="", min_volume=0, max_discount=None, min_discount=None
     ):
         """
         以字典形式返回 指数ETF 数据

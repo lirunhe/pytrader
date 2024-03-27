@@ -27,5 +27,3 @@ class Database:
         with self.engine.connect() as conn:
             conn.execute(statement)  # 返回值为ResultProxy类型
             conn.close()
-
-

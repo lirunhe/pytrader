@@ -24,6 +24,5 @@ class CCIStrategy(BacktestStrategyTemplate):
         except:
             return -1
 
-
     def get_scores(self, df: DataFrame):
         return CCI(df.high, df.low, df.close, timeperiod=14)

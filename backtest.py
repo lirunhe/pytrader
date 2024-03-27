@@ -14,7 +14,7 @@ strategy_class = load_strategy_class(strategy.code, 'custom_strategy_%d' % strat
 
 #
 mock_start_dt = "2024-03-06"
-mock_end_dt= "2024-03-08"
+mock_end_dt = "2024-03-08"
 
 backtest_engine = BackTestEngine(strategy_class=strategy_class,
                                  start_date=mock_start_dt,

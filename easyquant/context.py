@@ -25,11 +25,11 @@ class Context:
     def is_trade_date(self, date: str):
         return date in self.trade_days
 
-    def change_dt(self, current_dt:datetime.datetime):
+    def change_dt(self, current_dt: datetime.datetime):
         self.current_dt = current_dt
         self.previous_date = self.current_dt - datetime.timedelta(days=1)
 
-    def fetch_bars(self,  stock_code: str, max_num=120, unit='1d',
+    def fetch_bars(self, stock_code: str, max_num=120, unit='1d',
                    fields=['date', 'open', 'high', 'low', 'close'],
                    end_dt=None):
         """
@@ -42,7 +42,7 @@ class Context:
         :return:
         """
         return self.quotation.get_bars(stock_code, max_num,
-                                       unit=unit,fields=fields,
+                                       unit=unit, fields=fields,
                                        end_dt=end_dt if end_dt else self.current_dt)
 
     def fetch_minute_bars(self, stock_code: str, minute=5, max_num=80):

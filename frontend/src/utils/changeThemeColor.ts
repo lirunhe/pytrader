@@ -1,12 +1,12 @@
-import { ref, Ref } from 'vue'
-import { version } from 'element-plus'
-import { useLayoutStore } from '/@/store/modules/layout'
+import {ref, Ref} from 'vue'
+import {version} from 'element-plus'
+import {useLayoutStore} from '/@/store/modules/layout'
 
 const getTheme = (theme: string, prevTheme: Ref<string>) => {
     const themeCluster = getThemeCluster(theme.substr(1))
     const originalCluster = getThemeCluster(prevTheme.value.substr(1))
     prevTheme.value = theme
-    return { themeCluster, originalCluster }
+    return {themeCluster, originalCluster}
 }
 
 const getThemeCluster: (theme: string) => string[] = (theme) => {
@@ -16,7 +16,7 @@ const getThemeCluster: (theme: string) => string[] = (theme) => {
         let blue = parseInt(color.slice(4, 6), 16)
 
         if (tint === 0) return [red, green, blue].join(',')
-            
+
         red += Math.round(tint * (255 - red))
         green += Math.round(tint * (255 - green))
         blue += Math.round(tint * (255 - blue))
@@ -73,8 +73,8 @@ const getCSSString: (url: string, chalk: Ref<string>) => Promise<void> = (url, c
 const prevTheme = ref('#409eff')
 const chalk = ref('')
 export default async function changeThemeColor(theme: string): Promise<void> {
-    const { changeThemeColor } = useLayoutStore()
-    const { themeCluster, originalCluster } = getTheme(theme, prevTheme)
+    const {changeThemeColor} = useLayoutStore()
+    const {themeCluster, originalCluster} = getTheme(theme, prevTheme)
     if (!chalk.value) {
         const url = `https://unpkg.com/element-plus@${version}/dist/index.css`
         await getCSSString(url, chalk)
@@ -86,19 +86,19 @@ export default async function changeThemeColor(theme: string): Promise<void> {
     styleTag.innerText = chalk.value
 
     const systemSetting = document.querySelector('style.layout-side-setting') as HTMLElement
-    if(systemSetting) {
+    if (systemSetting) {
         let systemSettingText = systemSetting.innerText
         originalCluster.forEach((color, index) => {
             systemSettingText = systemSettingText.replace(new RegExp(color, 'ig'), themeCluster[index])
         })
         systemSetting.innerText = systemSettingText
     }
-    
+
     changeThemeColor(`#${themeCluster[0]}`)
 }
 
-export async function changeThemeDefaultColor():Promise<void> {
-    const { getSetting } = useLayoutStore()
+export async function changeThemeDefaultColor(): Promise<void> {
+    const {getSetting} = useLayoutStore()
     const defaultTheme = ref(getSetting.color.primary)
     // 判断是否修改过主题色
     defaultTheme.value.toLowerCase() !== '#409eff' && await changeThemeColor(defaultTheme.value)

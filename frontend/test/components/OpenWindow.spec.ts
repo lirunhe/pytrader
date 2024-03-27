@@ -1,5 +1,5 @@
-import { mount, VueWrapper } from '@vue/test-utils'
-import { nextTick, ComponentPublicInstance, ref } from 'vue'
+import {mount, VueWrapper} from '@vue/test-utils'
+import {nextTick, ComponentPublicInstance, ref} from 'vue'
 import OpenWindow from '/@/components/OpenWindow/index.vue'
 import ElementPlus from 'element-plus'
 
@@ -37,7 +37,7 @@ describe('OpenWindow.vue', () => {
             `,
         setup() {
             const show = ref(false)
-        
+
             return {
                 show
             }
@@ -47,19 +47,19 @@ describe('OpenWindow.vue', () => {
             plugins: [ElementPlus]
         }
     })
-    it('hide', async() => {
+    it('hide', async () => {
         await nextTick()
         expect(wrapper.find('.open-select').exists()).toBe(false)
     })
-    it('click show', async() => {
+    it('click show', async () => {
         await nextTick()
         const btn = wrapper.find('.content .el-button')
         btn.trigger('click')
         await nextTick()
         expect(wrapper.find('.open-select').exists()).toBe(true)
     })
-    
-    it('attr title', async() => {
+
+    it('attr title', async () => {
         await nextTick()
         const btn = wrapper.find('.content .el-button')
         btn.trigger('click')

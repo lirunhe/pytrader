@@ -145,6 +145,7 @@ class GJ(CommonConfig):
 
     AUTO_IPO_MENU_PATH = ["新股申购", "新股批量申购"]
 
+
 class GF(CommonConfig):
     DEFAULT_EXE_PATH = "C:\\gfzqrzrq\\xiadan.exe"
     TITLE = "核新网上交易系统"
@@ -162,6 +163,7 @@ class GF(CommonConfig):
     }
 
     AUTO_IPO_MENU_PATH = ["新股申购", "批量新股申购"]
+
 
 class WK(HT):
     pass

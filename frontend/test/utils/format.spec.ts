@@ -1,4 +1,4 @@
-import { format, unformat } from '/@/utils/tools'
+import {format, unformat} from '/@/utils/tools'
 
 describe('tools', () => {
     it('format', () => {

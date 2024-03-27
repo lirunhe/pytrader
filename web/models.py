@@ -36,6 +36,7 @@ class User(Base):
     create_time = Column(DateTime, nullable=False, default=datetime.now)
     update_time = Column(DateTime, nullable=False, default=datetime.now)
 
+
 if __name__ == '__main__':
     settings = APISettings()
     SQLALCHEMY_DATABASE_URL = f'sqlite:///../pytrader.db'

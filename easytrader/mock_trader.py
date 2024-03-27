@@ -132,7 +132,7 @@ class MockTrader(webtrader.WebTrader):
         balance = self.get_balance()[0]
         cost = self.calculate_cost(amount, price, entrust_bs)
         if not volume:
-            volume = float(price) * amount # 可能要取整数
+            volume = float(price) * amount  # 可能要取整数
 
         total_cost = volume + cost
         if balance.current_balance < total_cost and entrust_bs == "B":
@@ -172,7 +172,7 @@ class MockTrader(webtrader.WebTrader):
         if entrust_bs == "B":
             # 更新持仓
             balance.enable_balance = balance.enable_balance - total_cost
-            balance.current_balance = max (0, balance.current_balance - total_cost)
+            balance.current_balance = max(0, balance.current_balance - total_cost)
             balance.asset_balance -= total_cost
             if position:
                 position.cost_price = (position.current_amount * position.cost_price + volume) / (
@@ -183,7 +183,7 @@ class MockTrader(webtrader.WebTrader):
                     current_amount=amount,
                     enable_amount=amount,
                     income_balance=0,
-                    cost_price= total_cost / amount,
+                    cost_price=total_cost / amount,
                     last_price=price,
                     market_value=volume,
                     position_str="random",
@@ -195,7 +195,6 @@ class MockTrader(webtrader.WebTrader):
                 position.current_amount -= amount
                 # 更新持仓
                 balance.enable_balance = balance.enable_balance + volume - cost
-
 
     def find_hold_position(self, code: str) -> Position:
         for position in self.positions:

@@ -1,6 +1,6 @@
 import request from '/@/utils/request'
-import { AxiosResponse } from 'axios'
-import { IMenubarList } from '/@/type/store/layout'
+import {AxiosResponse} from 'axios'
+import {IMenubarList} from '/@/type/store/layout'
 
 const api = {
     login: '/api/login',
@@ -15,7 +15,7 @@ export interface loginParam {
     password: string
 }
 
-export function login(param: loginParam):Promise<AxiosResponse<ILoginResult>> {
+export function login(param: loginParam): Promise<AxiosResponse<ILoginResult>> {
     return request({
         url: api.login,
         method: 'post',
@@ -23,7 +23,7 @@ export function login(param: loginParam):Promise<AxiosResponse<ILoginResult>> {
     })
 }
 
-export function publickey():Promise<AxiosResponse<IResponse<string>>> {
+export function publickey(): Promise<AxiosResponse<IResponse<string>>> {
     return request({
         url: api.publickey,
         method: 'get'
@@ -47,6 +47,7 @@ export interface IStocks {
     watch_time: string
     close: number
     now: number
+
     [key: string]: any
 }
 
@@ -72,14 +73,14 @@ export function getStocks(): Promise<AxiosResponse<Array<IStocks>>> {
 }
 
 
-export function addStock(code:string): Promise<AxiosResponse<any>> {
+export function addStock(code: string): Promise<AxiosResponse<any>> {
     return request({
         url: `/api/watch_stocks/${code}`,
         method: 'post'
     })
 }
 
-export function removeWatchStock(code:string): Promise<AxiosResponse<any>> {
+export function removeWatchStock(code: string): Promise<AxiosResponse<any>> {
     return request({
         url: `/api/watch_stocks/${code}`,
         method: 'delete'

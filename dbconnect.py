@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import pandas as pd
 
 from db_config import DB_URL
+
 # 创建一个基类
 Base = declarative_base()
 

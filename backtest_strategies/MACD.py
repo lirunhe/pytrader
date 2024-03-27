@@ -23,12 +23,11 @@ class MACDStrategy(BacktestStrategyTemplate):
         except:
             return -1
 
-
     def get_score(self, df: DataFrame):
         return MACD(df.close, fastperiod=12, slowperiod=26, signalperiod=9)
 
     def show_score(self, df, ax):
-        macd_raw, signal, hist  = self.get_score(df)
+        macd_raw, signal, hist = self.get_score(df)
         macd = macd_raw - signal
         df['macd'] = macd
         df[['macd']].plot(ax=ax, grid=True, title='MACD', figsize=(20, 10))

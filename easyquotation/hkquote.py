@@ -6,7 +6,6 @@ url 参数改动
 股票代码 q=r_hk00981
 """
 
-
 import re
 
 from . import basequotation

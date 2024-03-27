@@ -253,17 +253,18 @@ class LocalDataQuotation(Quotation):
         }
         self.data_fetcher = DataFetcher(column_rename_map=column_rename_map, index_cloumn='dt')
 
-    def get_dbconnect(self, stock_code, start_date='2015-01-01', end_date=datetime.datetime.today().strftime('%Y-%m-%d'),count=200 ):
+    def get_dbconnect(self, stock_code, start_date='2015-01-01',
+                      end_date=datetime.datetime.today().strftime('%Y-%m-%d'), count=200):
         # 创建数据获取器实例
 
         # 构建SQLAlchemy查询（例如：获取特定股票代码的日K线数据）
 
-        if datetime.datetime.strptime(end_date,'%Y-%m-%d')>=datetime.datetime.today():
-            end_date=datetime.datetime.today()
+        if datetime.datetime.strptime(end_date, '%Y-%m-%d') >= datetime.datetime.today():
+            end_date = datetime.datetime.today()
         else:
-            end_date=datetime.datetime.strptime(end_date, '%Y-%m-%d')
+            end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d')
 
-        start_date=datetime.datetime.strptime(start_date, '%Y-%m-%d')
+        start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d')
 
         query = self.data_fetcher.session.query(OdsStockKlineDay.stock_code,
                                                 OdsStockKlineDay.open,
@@ -285,7 +286,7 @@ class LocalDataQuotation(Quotation):
     def get_bars(self, stock_code, count, unit='1d',
                  fields=['date', 'open', 'high', 'low', 'close', 'volume'],
                  include_now=False, end_dt=None) -> DataFrame:
-        df =self.get_dbconnect(stock_code, start_date='2015-01-01', end_date=end_dt,count=count)
+        df = self.get_dbconnect(stock_code, start_date='2015-01-01', end_date=end_dt, count=count)
         # df = get_price(self._format_code(stock_code), end_date=end_dt, count=count, frequency=unit)
 
         return df

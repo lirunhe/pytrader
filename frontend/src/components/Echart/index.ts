@@ -26,9 +26,7 @@ import {
 } from 'echarts/renderers'
 
 // 通过 ComposeOption 来组合出一个只有必须组件和图表的 Option 类型
-type ECOption = echarts.ComposeOption<
-  BarSeriesOption | LineSeriesOption | TitleComponentOption | GridComponentOption | RadarSeriesOption | PieSeriesOption | LegendComponentOption
->;
+type ECOption = echarts.ComposeOption<BarSeriesOption | LineSeriesOption | TitleComponentOption | GridComponentOption | RadarSeriesOption | PieSeriesOption | LegendComponentOption>;
 
 // 注册必须的组件
 echarts.use(

@@ -5,8 +5,9 @@ from backtest_strategies.backtest_strategy_template import BacktestStrategyTempl
 
 
 class RSIStrategy(BacktestStrategyTemplate):
-    def __init__(self, stock_code, bars: DataFrame,days=250, lower_rsi=40, upper_rsi=65,rsi_date_diff_long=21,rsi_date_diff_middle=12,rsi_date_diff_short=6,):
-        super().__init__(stock_code, bars,days)
+    def __init__(self, stock_code, bars: DataFrame, days=250, lower_rsi=40, upper_rsi=65, rsi_date_diff_long=21,
+                 rsi_date_diff_middle=12, rsi_date_diff_short=6, ):
+        super().__init__(stock_code, bars, days)
         # 买入线
         self.lower_rsi = lower_rsi
         # 卖出线
@@ -38,25 +39,26 @@ class RSIStrategy(BacktestStrategyTemplate):
         # 2023-12-06    62.351753
         return RSI(df.close, self.rsi_date_diff_long)
 
-    def get_scores_for_other_date_diff(self, rsi_date_diff,df: DataFrame):
+    def get_scores_for_other_date_diff(self, rsi_date_diff, df: DataFrame):
         # 基于不同的周期计算rsi指数
         return RSI(df.close, rsi_date_diff)
+
     # 判断是否是rsi金叉
     def get_singal_for_other_date_diff(self, df: DataFrame):
         try:
-            rsi_middle = self.get_scores_for_other_date_diff(self.rsi_date_diff_middle,df)[-1]
-            rsi_long = self.get_scores_for_other_date_diff(self.rsi_date_diff_long,df)[-1]
-            rsi_short = self.get_scores_for_other_date_diff(self.rsi_date_diff_short,df)[-1]
+            rsi_middle = self.get_scores_for_other_date_diff(self.rsi_date_diff_middle, df)[-1]
+            rsi_long = self.get_scores_for_other_date_diff(self.rsi_date_diff_long, df)[-1]
+            rsi_short = self.get_scores_for_other_date_diff(self.rsi_date_diff_short, df)[-1]
             # 判断是否处于多头市场
-            if rsi_long<=rsi_short:
-                if_uper_singal=1
+            if rsi_long <= rsi_short:
+                if_uper_singal = 1
             else:
-                if_uper_singal=0
+                if_uper_singal = 0
             # 多头市场且短期rsi低估
             if rsi_middle < self.lower_rsi and if_uper_singal:
                 return 1
             # 空头市场且短期rsi高估
-            if rsi_middle > self.upper_rsi and if_uper_singal==0:
+            if rsi_middle > self.upper_rsi and if_uper_singal == 0:
                 return 0
 
             return -1

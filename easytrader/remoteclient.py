@@ -15,13 +15,13 @@ class RemoteClient:
         self._broker = broker
 
     def prepare(
-        self,
-        config_path=None,
-        user=None,
-        password=None,
-        exe_path=None,
-        comm_password=None,
-        **kwargs
+            self,
+            config_path=None,
+            user=None,
+            password=None,
+            exe_path=None,
+            comm_password=None,
+            **kwargs
     ):
         """
         登陆客户端

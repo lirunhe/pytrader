@@ -25,6 +25,7 @@ def get_t_price(code: str):
 def get_t_prices(codes: List[str]):
     return [get_t_price(code) for code in codes]
 
+
 # quotation = use_quotation('tushare')
 quotation = use_quotation('')
 codes = {
@@ -44,5 +45,3 @@ for stock in codes.keys():
     r1, r2, s1, s2 = get_t_price(stock)
 
     print("%s %s : 阻力价格1 = %s, 阻力价格2 = %s, 支撑1 =%s , 支撑2 =%s" % (codes[stock], stock, r1, r2, s1, s2))
-
-
