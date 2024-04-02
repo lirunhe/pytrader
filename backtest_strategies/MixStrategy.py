@@ -35,52 +35,55 @@ class MixStrategy(BOLLStrategy, RSIStrategy):
     def __init__(self, stock_code, bars: DataFrame, days=250, lower_rsi=40, upper_rsi=65, rsi_date_diff_long=21,
                  rsi_date_diff_middle=12, rsi_date_diff_short=6):
 
-        super().__init__(stock_code, bars, days)
-        self.rsistrategy = RSIStrategy(stock_code=stock_code,
-                                       bars=bars,
-                                       days=days,
-                                       lower_rsi=lower_rsi,
+        RSIStrategy.__init__(self,stock_code=stock_code, bars=bars, days=days,
+                                        lower_rsi=lower_rsi,
                                        upper_rsi=upper_rsi,
                                        rsi_date_diff_long=rsi_date_diff_long,
                                        rsi_date_diff_middle=rsi_date_diff_middle,
                                        rsi_date_diff_short=rsi_date_diff_short)
-        self.bollstrategy = BOLLStrategy(stock_code=stock_code,
-                                         bars=bars,
-                                         days=days,
-                                         timeperiod=14,
-                                         nbdevup=2,
-                                         nbdevdn=2,
-                                         matype=0)
 
     def output_earning_rate(self):
         df = self.bars[-self.days:]
         df["signals"] = self.signals
+        df["short"] = self.get_scores_for_other_date_diff(self.rsi_date_diff_short,self.bars)
+        df["middle"] = self.get_scores_for_other_date_diff(self.rsi_date_diff_middle,self.bars)
+        df["long"] = self.get_scores_for_other_date_diff(self.rsi_date_diff_long,self.bars)
         df["strategy"] = (1 + df.close.pct_change(1).fillna(0) * self.signals).cumprod()
         df["base"] = df['close'] / df['close'][0]
-        df['rate_diff'] = df["strategy"] - df["base"] + 1
+        df['rate_diff'] = df["strategy"] - df["base"]
         print(df["strategy"].values[-1:])
         print(df["base"].values[-1:])
-        print(df["rate_diff"].values[-1:] - 1)
+        print(df["rate_diff"].values[-1:])
+        print(df["signals"].value_counts())
+        consecutive_series =(df['signals'] == 1) & (df['signals'].shift() == 0)
+        print(sum(consecutive_series))
         return df
 
     def show_plt(self):
         df = self.output_earning_rate()
         fig, axes = plt.subplots(3, 1, sharex=True, figsize=(18, 12))
-        df[['strategy', 'base', 'rate_diff']].plot(ax=axes[0], grid=True, title='strategy', figsize=(20, 10))
-        df[['signals']].plot(ax=axes[1], grid=True, title='signals', figsize=(20, 10))
+        df[['strategy', 'base']].plot(ax=axes[0], grid=True, title='strategy', figsize=(20, 10))
+        df[['signals', 'rate_diff']].plot(ax=axes[1], grid=True, title='signals', figsize=(20, 10))
         self.show_score(df, axes[2])
         plt.show()
 
     def show_score(self, df, ax):
-        df['score'] = self.rsistrategy.get_scores(df)
-        df.score.plot(ax=ax, grid=True, title='score', figsize=(20, 10))
+        df['score'] = self.get_scores(df)
+        df['score_short'] = self.get_scores_for_other_date_diff(self.rsi_date_diff_short,df)
+        df['score_long'] = self.get_scores_for_other_date_diff(self.rsi_date_diff_long,df)
+        df['score_high'] = self.upper_rsi
+        df['score_low'] = self.lower_rsi
+        df[['score','score_short','score_long','score_high','score_low']].plot(ax=ax, grid=True, title='score', figsize=(20, 10))
 
     def process(self):
         # 默认是空仓状态的，1表示满仓 TODO 同样的，这里也可以去输出仓位控制到signals列表里面
         position = 0
         for i in range(self.days):
-            # 当前的持仓，是上一天的信号
-            singal = self.get_singal(self.bars[:-self.days + i - 1])
+            # 当前的持仓，是上一天的信号,事实上这里就是在计算前一天的rsi，如果想把策略做到实时的话还得再更改一下
+            singal = self.get_singal(self.bars[:i])
+            # singal = self.get_singal(self.bars[:-self.days + i ])
+            # 原先为下面这种写法，事实上是有问题的，因为左闭右开的原则，已经天然的把当日的数据排除掉了，将昨日的信号作为今天的持仓与否
+            # singal = self.get_singal(self.bars[:-self.days + i -1])
             if singal == -1:
                 # 保持不变
                 self.signals.append(position)
@@ -94,4 +97,4 @@ class MixStrategy(BOLLStrategy, RSIStrategy):
         #     return self.rsistrategy.get_singal(df=bars)
         # else:
         #     return 0
-        return self.rsistrategy.get_singal_for_other_date_diff(df=bars)
+        return self.get_singal_for_other_date_diff(df=bars)

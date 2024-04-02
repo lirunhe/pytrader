@@ -29,6 +29,23 @@ class OdsStockKlineDay(Base):
     # 定义数据获取类
 
 
+class OdsRsiTradeData(Base):
+    __tablename__ = 'ods_rsi_trade_data'
+    __table_args__ = {'schema': 'ods'}
+
+    stock_code = Column(String, nullable=True)
+    lower_rsi = Column(Numeric, nullable=True)
+    upper_rsi = Column(Numeric, nullable=True)
+    rsi_date_diff_short = Column(Integer, nullable=True)
+    rsi_date_diff_middle = Column(Integer, nullable=True)
+    rsi_date_diff_long = Column(Integer, nullable=True)
+    signal_count = Column(Integer, nullable=True)
+    base_rate = Column(Numeric, nullable=True)
+    strategy_rate = Column(Numeric, nullable=True)
+    id = Column(Integer, primary_key=True)  # 通常id不会使用int8，这里假设int8是bigint类型，对应Integer
+
+
+
 class DataFetcher:
     def __init__(self, column_rename_map={}, index_cloumn='dt'):
         self.index_cloumn = index_cloumn
@@ -37,7 +54,6 @@ class DataFetcher:
 
         # 创建会话类
         Session = sessionmaker(bind=engine)
-        session = Session()
         self.session = Session()
 
     def fetch_data_as_df(self, query):

@@ -54,11 +54,13 @@ class RSIStrategy(BacktestStrategyTemplate):
                 if_uper_singal = 1
             else:
                 if_uper_singal = 0
-            # 多头市场且短期rsi低估
+            # 多头市场且短期rsi低估,黄金交叉
             if rsi_middle < self.lower_rsi and if_uper_singal:
+                # print(df.index[-1],rsi_short,rsi_middle,rsi_long,self.lower_rsi,self.upper_rsi)
                 return 1
-            # 空头市场且短期rsi高估
+            # 空头市场且短期rsi高估，死亡交叉
             if rsi_middle > self.upper_rsi and if_uper_singal == 0:
+                # print(df.index[-1], rsi_short, rsi_middle, rsi_long, self.lower_rsi, self.upper_rsi)
                 return 0
 
             return -1

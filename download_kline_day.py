@@ -8,8 +8,6 @@ from dbconnect import OdsStockKlineDay, DataFetcher
 from easyquant.quotation import use_quotation, Quotation
 
 
-
-
 class DownloadDayKline:
     def __init__(self, stock_list: list, use_quotation: Quotation, session, date_diff=10,
                  end_date=datetime.datetime.now().strftime("%Y-%m-%d")):
@@ -28,7 +26,9 @@ class DownloadDayKline:
         if stock_all_data is None:
             self.date_diff = 500
         else:
-            if datetime.datetime.combine(stock_all_data.dt, datetime.datetime.min.time()) >= datetime.datetime.now() - datetime.timedelta(days=self.date_diff):
+            if datetime.datetime.combine(stock_all_data.dt,
+                                         datetime.datetime.min.time()) >= datetime.datetime.now() - datetime.timedelta(
+                days=self.date_diff):
                 pass
             else:
                 self.date_diff = datetime.datetime.now().date() - stock_all_data.dt
@@ -106,16 +106,15 @@ class DownloadDayKline:
 
 
 if __name__ == '__main__':
-
     # quotation = use_quotation('jqdata')
     quotation = use_quotation('')
-    stock_list = ['513330','600438','000503','300059','159742','sh000001','sz399001','sz399001','sz399006']
-    datafetcher=DataFetcher()
+    stock_list = ['513330', '600438', '000503', '300059', '159742', 'sh000001', 'sz399001', 'sz399006', '600048',
+                  '000625', '601127', '600938']
+    datafetcher = DataFetcher()
     day_kline = DownloadDayKline(stock_list, quotation, session=datafetcher.session)
     day_kline.run()
 
     datafetcher.session.close()
-
 
 """
 
