@@ -51,12 +51,12 @@ class MixStrategy(BOLLStrategy, RSIStrategy):
         df["strategy"] = (1 + df.close.pct_change(1).fillna(0) * self.signals).cumprod()
         df["base"] = df['close'] / df['close'][0]
         df['rate_diff'] = df["strategy"] - df["base"]
-        print(df["strategy"].values[-1:])
-        print(df["base"].values[-1:])
-        print(df["rate_diff"].values[-1:])
-        print(df["signals"].value_counts())
-        consecutive_series =(df['signals'] == 1) & (df['signals'].shift() == 0)
-        print(sum(consecutive_series))
+        # print(df["strategy"].values[-1:])
+        # print(df["base"].values[-1:])
+        # print(df["rate_diff"].values[-1:])
+        # print(df["signals"].value_counts())
+        # consecutive_series =(df['signals'] == 1) & (df['signals'].shift() == 0)
+        # print(sum(consecutive_series))
         return df
 
     def show_plt(self):

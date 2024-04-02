@@ -37,7 +37,7 @@ class RSIStrategy(BacktestStrategyTemplate):
         # 2023-12-04    62.662361
         # 2023-12-05    61.323572
         # 2023-12-06    62.351753
-        return RSI(df.close, self.rsi_date_diff_long)
+        return RSI(df.close, self.rsi_date_diff_middle)
 
     def get_scores_for_other_date_diff(self, rsi_date_diff, df: DataFrame):
         # 基于不同的周期计算rsi指数

@@ -63,7 +63,7 @@ bars = quotation.get_bars(stock_code, size, end_dt=end_date)
 
 # strategy = MACDStrategy(stock_code, bars, days=size)
 
-strategy = MixStrategy(stock_code, bars, days=size, lower_rsi=27, upper_rsi=86, rsi_date_diff_long=3,rsi_date_diff_middle=2, rsi_date_diff_short=2)
+strategy = MixStrategy(stock_code, bars, days=size, lower_rsi=41, upper_rsi=44, rsi_date_diff_long=21,rsi_date_diff_middle=6, rsi_date_diff_short=2)
 
 
 strategy.process()
